@@ -1,0 +1,23 @@
+---
+# tasks file for install
+- name: Install app {{ app }}
+  git:
+    repo: '{{ repo }}'
+    dest: '/opt/{{ app }}'
+    update: yes
+
+- name: Install app {{ app }} dependencies
+  pip:
+    requirements: '/opt/{{ app }}/requirements.txt'
+    state: present
+
+- name: Install app {{ app }} service
+  template:
+    src: templates/service.j2
+    dest: /etc/systemd/system/{{ app }}.service
+
+- name: Start service {{ app }}
+  systemd:
+    name: "{{ app }}.service"
+    state: restarted
+    enabled: yes

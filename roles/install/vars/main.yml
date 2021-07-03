@@ -1,0 +1,4 @@
+---
+# vars file for install
+app: flaskex
+repo: https://github.com/anfederico/flaskex.git
